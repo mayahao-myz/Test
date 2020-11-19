@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hbxy.ssm.admin.module.mapper.AppMapper">
+<!--  resultMap 多表关联查询，返回的值更像是一个集合；为了映射select查询出来结果的集合，其主要作用是将实体类中的字段与数据库表中的字段进行关联映射。-->
+  <resultMap id="BaseResultMap" type="com.hbxy.ssm.admin.module.model.App">
+    <id column="app_id" jdbcType="VARCHAR" property="appId" />
+<!--          数据库字段名         数据类型             实体类的属性名称-->
+    <result column="app_name" jdbcType="VARCHAR" property="appName" />
+    <result column="app_code" jdbcType="VARCHAR" property="appCode" />
+    <result column="app_icon_url" jdbcType="VARCHAR" property="appIconUrl" />
+    <result column="app_url" jdbcType="VARCHAR" property="appUrl" />
+    <result column="app_developer" jdbcType="VARCHAR" property="appDeveloper" />
+    <result column="is_admin" jdbcType="VARCHAR" property="isAdmin" />
+    <result column="order_index" jdbcType="INTEGER" property="orderIndex" />
+    <result column="comments" jdbcType="VARCHAR" property="comments" />
+    <result column="current_status" jdbcType="CHAR" property="currentStatus" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="created_user_login_id" jdbcType="VARCHAR" property="createdUserLoginId" />
+    <result column="last_updated_time" jdbcType="TIMESTAMP" property="lastUpdatedTime" />
+    <result column="last_updated_user_login_id" jdbcType="VARCHAR" property="lastUpdatedUserLoginId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    app_id, app_name, app_code, app_icon_url, app_url, app_developer, is_admin, order_index, 
+    comments, current_status, created_time, created_user_login_id, last_updated_time, 
+    last_updated_user_login_id
+  </sql>
+
+  <select id="selectByExample" parameterType="com.hbxy.ssm.admin.module.model.AppExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mx_app
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mx_app
+    where app_id = #{appId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from mx_app
+    where app_id = #{appId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hbxy.ssm.admin.module.model.AppExample">
+    delete from mx_app
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hbxy.ssm.admin.module.model.App">
+    insert into mx_app (app_id, app_name, app_code, 
+      app_icon_url, app_url, app_developer, 
+      is_admin, order_index, comments, 
+      current_status, created_time, created_user_login_id, 
+      last_updated_time, last_updated_user_login_id
+      )
+    values (#{appId,jdbcType=VARCHAR}, #{appName,jdbcType=VARCHAR}, #{appCode,jdbcType=VARCHAR}, 
+      #{appIconUrl,jdbcType=VARCHAR}, #{appUrl,jdbcType=VARCHAR}, #{appDeveloper,jdbcType=VARCHAR}, 
+      #{isAdmin,jdbcType=VARCHAR}, #{orderIndex,jdbcType=INTEGER}, #{comments,jdbcType=VARCHAR}, 
+      #{currentStatus,jdbcType=CHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{createdUserLoginId,jdbcType=VARCHAR}, 
+      #{lastUpdatedTime,jdbcType=TIMESTAMP}, #{lastUpdatedUserLoginId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hbxy.ssm.admin.module.model.App">
+    insert into mx_app
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="appId != null">
+        app_id,
+      </if>
+      <if test="appName != null">
+        app_name,
+      </if>
+      <if test="appCode != null">
+        app_code,
+      </if>
+      <if test="appIconUrl != null">
+        app_icon_url,
+      </if>
+      <if test="appUrl != null">
+        app_url,
+      </if>
+      <if test="appDeveloper != null">
+        app_developer,
+      </if>
+      <if test="isAdmin != null">
+        is_admin,
+      </if>
+      <if test="orderIndex != null">
+        order_index,
+      </if>
+      <if test="comments != null">
+        comments,
+      </if>
+      <if test="currentStatus != null">
+        current_status,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="createdUserLoginId != null">
+        created_user_login_id,
+      </if>
+      <if test="lastUpdatedTime != null">
+        last_updated_time,
+      </if>
+      <if test="lastUpdatedUserLoginId != null">
+        last_updated_user_login_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="appId != null">
+        #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="appName != null">
+        #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="appCode != null">
+        #{appCode,jdbcType=VARCHAR},
+      </if>
+      <if test="appIconUrl != null">
+        #{appIconUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="appUrl != null">
+        #{appUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="appDeveloper != null">
+        #{appDeveloper,jdbcType=VARCHAR},
+      </if>
+      <if test="isAdmin != null">
+        #{isAdmin,jdbcType=VARCHAR},
+      </if>
+      <if test="orderIndex != null">
+        #{orderIndex,jdbcType=INTEGER},
+      </if>
+      <if test="comments != null">
+        #{comments,jdbcType=VARCHAR},
+      </if>
+      <if test="currentStatus != null">
+        #{currentStatus,jdbcType=CHAR},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserLoginId != null">
+        #{createdUserLoginId,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdatedTime != null">
+        #{lastUpdatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedUserLoginId != null">
+        #{lastUpdatedUserLoginId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hbxy.ssm.admin.module.model.AppExample" resultType="java.lang.Long">
+    select count(*) from mx_app
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update mx_app
+    <set>
+      <if test="record.appId != null">
+        app_id = #{record.appId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appName != null">
+        app_name = #{record.appName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appCode != null">
+        app_code = #{record.appCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appIconUrl != null">
+        app_icon_url = #{record.appIconUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appUrl != null">
+        app_url = #{record.appUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appDeveloper != null">
+        app_developer = #{record.appDeveloper,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isAdmin != null">
+        is_admin = #{record.isAdmin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderIndex != null">
+        order_index = #{record.orderIndex,jdbcType=INTEGER},
+      </if>
+      <if test="record.comments != null">
+        comments = #{record.comments,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currentStatus != null">
+        current_status = #{record.currentStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.createdTime != null">
+        created_time = #{record.createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createdUserLoginId != null">
+        created_user_login_id = #{record.createdUserLoginId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastUpdatedTime != null">
+        last_updated_time = #{record.lastUpdatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastUpdatedUserLoginId != null">
+        last_updated_user_login_id = #{record.lastUpdatedUserLoginId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update mx_app
+    set app_id = #{record.appId,jdbcType=VARCHAR},
+      app_name = #{record.appName,jdbcType=VARCHAR},
+      app_code = #{record.appCode,jdbcType=VARCHAR},
+      app_icon_url = #{record.appIconUrl,jdbcType=VARCHAR},
+      app_url = #{record.appUrl,jdbcType=VARCHAR},
+      app_developer = #{record.appDeveloper,jdbcType=VARCHAR},
+      is_admin = #{record.isAdmin,jdbcType=VARCHAR},
+      order_index = #{record.orderIndex,jdbcType=INTEGER},
+      comments = #{record.comments,jdbcType=VARCHAR},
+      current_status = #{record.currentStatus,jdbcType=CHAR},
+      created_time = #{record.createdTime,jdbcType=TIMESTAMP},
+      created_user_login_id = #{record.createdUserLoginId,jdbcType=VARCHAR},
+      last_updated_time = #{record.lastUpdatedTime,jdbcType=TIMESTAMP},
+      last_updated_user_login_id = #{record.lastUpdatedUserLoginId,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hbxy.ssm.admin.module.model.App">
+    update mx_app
+    <set>
+      <if test="appName != null">
+        app_name = #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="appCode != null">
+        app_code = #{appCode,jdbcType=VARCHAR},
+      </if>
+      <if test="appIconUrl != null">
+        app_icon_url = #{appIconUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="appUrl != null">
+        app_url = #{appUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="appDeveloper != null">
+        app_developer = #{appDeveloper,jdbcType=VARCHAR},
+      </if>
+      <if test="isAdmin != null">
+        is_admin = #{isAdmin,jdbcType=VARCHAR},
+      </if>
+      <if test="orderIndex != null">
+        order_index = #{orderIndex,jdbcType=INTEGER},
+      </if>
+      <if test="comments != null">
+        comments = #{comments,jdbcType=VARCHAR},
+      </if>
+      <if test="currentStatus != null">
+        current_status = #{currentStatus,jdbcType=CHAR},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserLoginId != null">
+        created_user_login_id = #{createdUserLoginId,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdatedTime != null">
+        last_updated_time = #{lastUpdatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedUserLoginId != null">
+        last_updated_user_login_id = #{lastUpdatedUserLoginId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where app_id = #{appId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hbxy.ssm.admin.module.model.App">
+    update mx_app
+    set app_name = #{appName,jdbcType=VARCHAR},
+      app_code = #{appCode,jdbcType=VARCHAR},
+      app_icon_url = #{appIconUrl,jdbcType=VARCHAR},
+      app_url = #{appUrl,jdbcType=VARCHAR},
+      app_developer = #{appDeveloper,jdbcType=VARCHAR},
+      is_admin = #{isAdmin,jdbcType=VARCHAR},
+      order_index = #{orderIndex,jdbcType=INTEGER},
+      comments = #{comments,jdbcType=VARCHAR},
+      current_status = #{currentStatus,jdbcType=CHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      created_user_login_id = #{createdUserLoginId,jdbcType=VARCHAR},
+      last_updated_time = #{lastUpdatedTime,jdbcType=TIMESTAMP},
+      last_updated_user_login_id = #{lastUpdatedUserLoginId,jdbcType=VARCHAR}
+    where app_id = #{appId,jdbcType=VARCHAR}
+  </update>
+</mapper>

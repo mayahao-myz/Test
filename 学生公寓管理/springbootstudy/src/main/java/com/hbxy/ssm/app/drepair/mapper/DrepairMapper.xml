@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hbxy.ssm.app.drepair.mapper.DrepairMapper">
+  <resultMap id="BaseResultMap" type="com.hbxy.ssm.app.drepair.model.Drepair">
+    <id column="drepair_id" jdbcType="INTEGER" property="drepairId" />
+    <result column="repair_id" jdbcType="INTEGER" property="repairId" />
+    <result column="dorm_no" jdbcType="VARCHAR" property="dormNo" />
+    <result column="drepair_data" jdbcType="TIMESTAMP" property="drepairData" />
+    <result column="repair_content" jdbcType="VARCHAR" property="repairContent" />
+    <result column="drepair_state" jdbcType="VARCHAR" property="drepairState" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    drepair_id, repair_id, dorm_no, drepair_data, repair_content, drepair_state
+  </sql>
+  <select id="selectByExample" parameterType="com.hbxy.ssm.app.drepair.model.DrepairExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ap_drepair
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ap_drepair
+    where drepair_id = #{drepairId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ap_drepair
+    where drepair_id = #{drepairId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hbxy.ssm.app.drepair.model.DrepairExample">
+    delete from ap_drepair
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hbxy.ssm.app.drepair.model.Drepair">
+    insert into ap_drepair (drepair_id, repair_id, dorm_no, 
+      drepair_data, repair_content, drepair_state
+      )
+    values (#{drepairId,jdbcType=INTEGER}, #{repairId,jdbcType=INTEGER}, #{dormNo,jdbcType=VARCHAR}, 
+      #{drepairData,jdbcType=TIMESTAMP}, #{repairContent,jdbcType=VARCHAR}, #{drepairState,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hbxy.ssm.app.drepair.model.Drepair">
+    insert into ap_drepair
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="drepairId != null">
+        drepair_id,
+      </if>
+      <if test="repairId != null">
+        repair_id,
+      </if>
+      <if test="dormNo != null">
+        dorm_no,
+      </if>
+      <if test="drepairData != null">
+        drepair_data,
+      </if>
+      <if test="repairContent != null">
+        repair_content,
+      </if>
+      <if test="drepairState != null">
+        drepair_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="drepairId != null">
+        #{drepairId,jdbcType=INTEGER},
+      </if>
+      <if test="repairId != null">
+        #{repairId,jdbcType=INTEGER},
+      </if>
+      <if test="dormNo != null">
+        #{dormNo,jdbcType=VARCHAR},
+      </if>
+      <if test="drepairData != null">
+        #{drepairData,jdbcType=TIMESTAMP},
+      </if>
+      <if test="repairContent != null">
+        #{repairContent,jdbcType=VARCHAR},
+      </if>
+      <if test="drepairState != null">
+        #{drepairState,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hbxy.ssm.app.drepair.model.DrepairExample" resultType="java.lang.Long">
+    select count(*) from ap_drepair
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ap_drepair
+    <set>
+      <if test="record.drepairId != null">
+        drepair_id = #{record.drepairId,jdbcType=INTEGER},
+      </if>
+      <if test="record.repairId != null">
+        repair_id = #{record.repairId,jdbcType=INTEGER},
+      </if>
+      <if test="record.dormNo != null">
+        dorm_no = #{record.dormNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drepairData != null">
+        drepair_data = #{record.drepairData,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.repairContent != null">
+        repair_content = #{record.repairContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drepairState != null">
+        drepair_state = #{record.drepairState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ap_drepair
+    set drepair_id = #{record.drepairId,jdbcType=INTEGER},
+      repair_id = #{record.repairId,jdbcType=INTEGER},
+      dorm_no = #{record.dormNo,jdbcType=VARCHAR},
+      drepair_data = #{record.drepairData,jdbcType=TIMESTAMP},
+      repair_content = #{record.repairContent,jdbcType=VARCHAR},
+      drepair_state = #{record.drepairState,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hbxy.ssm.app.drepair.model.Drepair">
+    update ap_drepair
+    <set>
+      <if test="repairId != null">
+        repair_id = #{repairId,jdbcType=INTEGER},
+      </if>
+      <if test="dormNo != null">
+        dorm_no = #{dormNo,jdbcType=VARCHAR},
+      </if>
+      <if test="drepairData != null">
+        drepair_data = #{drepairData,jdbcType=TIMESTAMP},
+      </if>
+      <if test="repairContent != null">
+        repair_content = #{repairContent,jdbcType=VARCHAR},
+      </if>
+      <if test="drepairState != null">
+        drepair_state = #{drepairState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where drepair_id = #{drepairId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hbxy.ssm.app.drepair.model.Drepair">
+    update ap_drepair
+    set repair_id = #{repairId,jdbcType=INTEGER},
+      dorm_no = #{dormNo,jdbcType=VARCHAR},
+      drepair_data = #{drepairData,jdbcType=TIMESTAMP},
+      repair_content = #{repairContent,jdbcType=VARCHAR},
+      drepair_state = #{drepairState,jdbcType=VARCHAR}
+    where drepair_id = #{drepairId,jdbcType=INTEGER}
+  </update>
+</mapper>

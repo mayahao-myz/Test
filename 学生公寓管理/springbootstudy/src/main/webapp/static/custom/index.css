@@ -1,0 +1,5 @@
+body{
+    background: url("images/bg2.jpg") no-repeat #ffffff center center;
+    /*width: calc(100% - 200px);*/
+    /*height:calc(100% - 50px - 50px);*/
+}

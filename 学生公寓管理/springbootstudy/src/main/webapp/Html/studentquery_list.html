@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学生查询信息</title>
+<!--    <%&#45;&#45;    2.1 引入element ui &#45;&#45;%>-->
+<!--    <%&#45;&#45;   .css样式&#45;&#45;%>-->
+    <link rel="stylesheet" href="../static/element-ui/index.css">
+    <link rel="stylesheet" href="../static/custom/el-custom.css">
+</head>
+<body>
+<!--开始使用vue模板-->
+<!--<%&#45;&#45;挂载vue实例&#45;&#45;%>-->
+<div id="ap">
+    <!--页面内容区域-->
+    <div class="mx-main-content">
+        <div class="mx-table-title">
+            <span>当前位置--学生查询宿舍情况</span>
+            <br>
+            <div class="mx-table-title1">
+                <input type="text" width="80" value="请输入学号：">
+                <input type="button" value="查询" @click="">
+            </div>
+        </div>
+        <div class="el-divider1">
+<!--            分割线-->
+            <el-divider></el-divider>
+        </div>
+
+
+        <div class="mx-table-content">
+            <!--使用element-ui table组件-->
+            <el-table>
+
+            </el-table>
+
+        </div>
+    </div>
+</div>
+
+<!--<%&#45;&#45;1 引入vue&#45;&#45;%>-->
+<script src="../static/vue/vue.js"></script>
+<!--<%&#45;&#45;2.2引入element ui &#45;&#45;%>-->
+<script src="../static/element-ui/index.js"></script>
+<!--<%&#45;&#45;3. 引入axios  axios 是一个基于 promise 的 HTTP 库,可以用在浏览器和 node.js 中&#45;&#45;%>-->
+<script src="../static/axios/axios.js"></script>
+<script src="../static/mx-config.js"></script>
+
+<script>
+    //
+    var app=new Vue({
+        //模板名称,在html中引用的组件名称
+        el:'#ap',
+        //定义数据
+        //可以在html中使用
+        data:function () {
+            return{
+                //定义表格要的数据
+                tableData:[],
+                //定义一个变量,存放哪行数据被选中,数据库是从0开始的
+                selectItemIndex:-1,
+                //定义对话框:如果对话框有自定义的数据需要通过变量控制,需要先定义
+                //option获取或设置对话框的属性。用法：.dialog(  'option'  , optionName , [value] )
+                dialog:{
+                    title:'',
+                    option:'',
+                    show:false
+                },
+                //定义模型,通过模型数据:model="form"与表单绑定
+
+            }
+
+
+        }
+    })
+</script>
+</body>
+</html>

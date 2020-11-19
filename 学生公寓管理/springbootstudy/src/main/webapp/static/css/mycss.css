@@ -1,0 +1,44 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.div_contaitner {
+    margin: auto;
+    width: 80%;
+    height: 100%;
+}
+
+.div_left {
+    width: 300px;
+    height: 100%;
+    background: #6d85ff;
+    float: left;
+}
+
+.div_head {
+    width: auto;
+    height: 65px;
+    background: #bfc2c3;
+    float: top;
+}
+
+.div_content {
+    width: auto;
+    height: calc(100% - 65px - 50px);
+    float: top;
+    padding-left: 30px;
+    padding-right: 30px;
+
+    overflow: auto;
+
+
+}
+
+.div_footer {
+    width: auto;
+    height: 50px;
+    background: #bfc2c3;
+    float: bottom;
+}
